@@ -17,13 +17,11 @@ app.post('/api/referral', async (req, res) => {
 
     const { referrerName, referrerEmail, refereeName, refereeEmail } = req.body;
 
-    // Validate request data
     if (!referrerName || !referrerEmail || !refereeName || !refereeEmail) {
       console.error('Validation failed: Missing fields');
       return res.status(400).json({ error: 'All fields are required.' });
     }
 
-    // Save referral data to database using Prisma
     console.log('Saving to database...');
     const referral = await prisma.referral.create({
       data: {
@@ -36,7 +34,6 @@ app.post('/api/referral', async (req, res) => {
     });
     console.log('Referral saved to database:', referral);
 
-    // Send referral email
     console.log('Sending email...');
     const transporter = nodemailer.createTransport({
       service: 'gmail',
